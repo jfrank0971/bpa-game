@@ -7,11 +7,13 @@ import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.relativity.game.state.GameMapLoader;
 import com.relativity.game.state.entities.types.Player;
+import com.relativity.game.state.entities.types.PlayerToo;
 
 @SuppressWarnings("rawtypes")
 public enum EntityType {
 	
-	PLAYER("player", Player.class, 14, 32, 40);
+	PLAYER("player", Player.class, 14, 32, 40),
+	PLAYERTOO("playerToo", PlayerToo.class, 14, 32, 0);
 	
 	private String id;
 	private Class loaderClass;

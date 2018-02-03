@@ -13,50 +13,49 @@ public class EntityLoader {
 
 	private static Json json = new Json();
 	private static String id;
-	
-	public static ArrayList<Entity> loadEntities (GameMapLoader gameMapLoader, ArrayList<Object> requestedEntitys) {
-		
+
+	public static ArrayList<Entity> loadEntities(GameMapLoader gameMapLoader) {
+
 		ArrayList<Entity> currentEntities = new ArrayList<Entity>();
 
-		for(String entity : requestedEntitys) {
-			currentEntities.add(EntityType.createEntityUsingSnapshot(loadPlayer(1500, 2000), gameMapLoader));
+		currentEntities.add(EntityType.createEntityUsingSnapshot(loadPlayer(1500, 2000), gameMapLoader));
+		currentEntities.add(EntityType.createEntityUsingSnapshot(loadPlayer(1700, 2000), gameMapLoader));
 
-		}
-		
 		System.out.println("This currentEntities contains this: " + currentEntities.toString());
 		return currentEntities;
-		
+
 	}
-	
+
 	public static void clearEntities() {
 	}
-	
-	public static void buildEntityFile (String id, ArrayList<Entity> entities) {
+
+	public static void buildEntityFile(String id, ArrayList<Entity> entities) {
 		ArrayList<EntitySnapshot> snapshots = new ArrayList<EntitySnapshot>();
 		for (Entity entity : entities)
 			snapshots.add(entity.getSaveSnapshot());
-		
+
 		Gdx.files.local("entitiylist/").file().mkdirs();
 		FileHandle file = Gdx.files.local("entitiylist/" + id + ".entities");
 		file.writeString(json.prettyPrint(snapshots), false);
 	}
-	
 
-/*	if (file.exists()) {
-		EntitySnapshot[] snapshots = json.fromJson(EntitySnapshot[].class, file.readString());
-		ArrayList<Entity> entities = new ArrayList<Entity>();
-		for (EntitySnapshot snapshot : snapshots) {
-			entities.add(EntityType.createEntityUsingSnapshot(snapshot, gameMapLoader));
-		}
-		return entities;
-	} else {
-		buildEntityFile(id, currentEntities);
-		return currentEntities;
-	}*/
-	
+	/*
+	 * if (file.exists()) { EntitySnapshot[] snapshots =
+	 * json.fromJson(EntitySnapshot[].class, file.readString()); ArrayList<Entity>
+	 * entities = new ArrayList<Entity>(); for (EntitySnapshot snapshot : snapshots)
+	 * { entities.add(EntityType.createEntityUsingSnapshot(snapshot,
+	 * gameMapLoader)); } return entities; } else { buildEntityFile(id,
+	 * currentEntities); return currentEntities; }
+	 */
+
 	public static EntitySnapshot loadPlayer(int x, int y) {
 		System.out.println("loadPlayer() : Running");
 		return new EntitySnapshot("PLAYER", x, y);
 	}
 	
+	public static EntitySnapshot loadPlayer2(int x, int y) {
+		System.out.println("loadPlayer2() : Running");
+		return new EntitySnapshot("PLAYERTOO", x, y);
+	}
+
 }

@@ -19,7 +19,7 @@ import com.badlogic.gdx.math.Vector3;
 import com.relativity.game.RelativityGame;
 import com.relativity.game.state.entities.Entity;
 import com.relativity.game.state.entities.EntityLoader;
-import com.relativity.game.state.entities.Player;
+import com.relativity.game.state.entities.types.Player;
 
 public class GameMapLoader {
 
@@ -37,7 +37,7 @@ public class GameMapLoader {
 	int mapWidth, mapHeight, tilePixelWidth, tilePixelHeight;
 	Entity entity;
 	
-	public void loader(String map, RelativityGame rg) {
+	public void load(String map, RelativityGame rg) {
 
 		this.rg = rg;
 		tiledMap = new TmxMapLoader().load(map);
@@ -50,7 +50,12 @@ public class GameMapLoader {
 		tilePixelHeight = prop.get("tileheight", Integer.class);
 
 		entities = new ArrayList<Entity>();
-		entities.addAll(EntityLoader.loadEntities("basic", this, entities));
+		System.out.println("EntityLoader.loadEntities main");
+		
+		ArrayList<Object> requestedEntitys = new ArrayList<Object>();
+		
+		entities.addAll(EntityLoader.loadEntities(this));
+		System.out.println(entities.toString());
 
 
 		camera = new OrthographicCamera();
@@ -133,7 +138,7 @@ public class GameMapLoader {
 		}
 
 		if (Gdx.input.isKeyJustPressed(Keys.S)) {
-			EntityLoader.saveEntities("basic", entities);
+			EntityLoader.buildEntityFile("basic", entities);
 		}
 	}
 

@@ -6,6 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.reflect.ClassReflection;
 import com.badlogic.gdx.utils.reflect.ReflectionException;
 import com.relativity.game.state.GameMapLoader;
+import com.relativity.game.state.entities.types.Player;
 
 @SuppressWarnings("rawtypes")
 public enum EntityType {
@@ -28,8 +29,9 @@ public enum EntityType {
 
 	static {
 		entityTypes = new HashMap<String, EntityType>();
-		for (EntityType type : EntityType.values())
-			entityTypes.put(type.id, type);
+		for (EntityType type : EntityType.values()) {
+			entityTypes.put(type.id.toUpperCase(), type);
+		}
 	}
 	
 	public String getId() {
@@ -54,6 +56,7 @@ public enum EntityType {
 			@SuppressWarnings("unchecked")
 			Entity entity = ClassReflection.newInstance(type.loaderClass);
 			entity.create(entitySnapshot, type, gameMapLoader);
+			System.out.println("Entity is this: " + entity.getType());
 			return entity;
 		} catch (ReflectionException e) {
 			Gdx.app.error("Entity Loader", "Could not load entity of type " + type.id);

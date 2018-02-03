@@ -21,7 +21,7 @@ public class LevelOne implements Screen {
 		
 		this.rg = rg;
 		gmLoader = new GameMapLoader();
-		gmLoader.loader("map.tmx", rg);
+		gmLoader.load("map.tmx", rg);
 		
 		/*box2dRenderer = new Box2DDebugRenderer();
 		world = new World(new Vector2(0, 0), true);

@@ -3,10 +3,8 @@ package com.relativity.game.state.maps;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.math.Vector3;
 import com.relativity.game.RelativityGame;
 import com.relativity.game.state.GameMapLoader;
-import com.relativity.game.state.TileConfig;
 
 public class LevelOne implements Screen {
 	

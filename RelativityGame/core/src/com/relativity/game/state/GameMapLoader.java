@@ -19,7 +19,6 @@ import com.badlogic.gdx.math.Vector3;
 import com.relativity.game.RelativityGame;
 import com.relativity.game.state.entities.Entity;
 import com.relativity.game.state.entities.EntityLoader;
-import com.relativity.game.state.entities.types.Player;
 
 public class GameMapLoader {
 
@@ -38,7 +37,7 @@ public class GameMapLoader {
 	Entity entity;
 	
 	public void load(String map, RelativityGame rg) {
-
+		
 		this.rg = rg;
 		tiledMap = new TmxMapLoader().load(map);
 		tiledMapRenderer = new OrthogonalTiledMapRenderer(tiledMap);

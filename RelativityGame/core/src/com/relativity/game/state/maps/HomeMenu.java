@@ -13,7 +13,7 @@ public class HomeMenu implements Screen {
 	final RelativityGame rg;
 	final HomeMenu hm;
 	private Texture exitButtonOn, exitButtonOff;
-	private Texture enterButtonOn, enterButtonOff;
+	private Texture enterButtonOn; //enterButtonOff;
 	private int exitButtonX, exitButtonY, enterButtonX, enterButtonY;
 	private OrthographicCamera camera;
 
@@ -24,7 +24,7 @@ public class HomeMenu implements Screen {
 		exitButtonOn = new Texture("exit.png");
 		exitButtonOff = new Texture("exit.png");
 		enterButtonOn = new Texture("enter.png");
-		enterButtonOff = new Texture("enter.png");
+		//enterButtonOff = new Texture("enter.png");
 		camera = new OrthographicCamera();
 		camera.setToOrtho(false, RelativityGame.WIDTH, RelativityGame.HEIGHT);
 		
@@ -70,7 +70,6 @@ public class HomeMenu implements Screen {
 				rg.setScreen(new LevelOne(rg));
 
 			}
-			
 		}
 		camera.update();
 		

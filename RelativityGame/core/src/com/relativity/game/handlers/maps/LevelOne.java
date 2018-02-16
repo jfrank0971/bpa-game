@@ -1,4 +1,4 @@
-package com.relativity.game.configs.maps;
+package com.relativity.game.handlers.maps;
 
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.Screen;
@@ -6,9 +6,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.relativity.game.RelativityGame;
-import com.relativity.game.configs.GameMapLoader;
-import com.relativity.game.configs.entities.InputHandler;
-import com.relativity.game.configs.entities.types.Player;
+import com.relativity.game.handlers.GameMapLoader;
+import com.relativity.game.handlers.InputHandler;
+import com.relativity.game.handlers.entities.types.Player;
 
 public class LevelOne implements Screen {
 	

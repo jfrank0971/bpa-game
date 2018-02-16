@@ -1,11 +1,11 @@
-package com.relativity.game.configs.entities;
+package com.relativity.game.handlers;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;
 import com.badlogic.gdx.physics.box2d.ContactListener;
 import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.Manifold;
-import com.relativity.game.configs.entities.types.Player;
+import com.relativity.game.handlers.entities.types.Player;
 
 public class CollisionHandler implements ContactListener {
 

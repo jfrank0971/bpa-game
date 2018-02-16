@@ -1,11 +1,11 @@
-package com.relativity.game.configs.entities;
+package com.relativity.game.handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.relativity.game.configs.entities.types.Player;
+import com.relativity.game.handlers.entities.types.Player;
 
 /**
  * OrthographicCamera that cannot go beyond specified rectangle.

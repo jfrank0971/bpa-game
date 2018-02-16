@@ -1,4 +1,4 @@
-package com.relativity.game.configs;
+package com.relativity.game.handlers;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;

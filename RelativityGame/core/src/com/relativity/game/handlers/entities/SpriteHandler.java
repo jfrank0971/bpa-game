@@ -1,4 +1,6 @@
-package com.relativity.game.configs.entities;
+package com.relativity.game.handlers.entities;
+
+import static com.relativity.game.handlers.GameMapLoader.PPM;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -6,7 +8,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.relativity.game.RelativityGame;
-import static com.relativity.game.configs.GameMapLoader.PPM;
 
 public class SpriteHandler {
 

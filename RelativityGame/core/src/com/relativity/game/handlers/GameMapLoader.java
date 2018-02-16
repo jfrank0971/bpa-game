@@ -1,4 +1,4 @@
-package com.relativity.game.configs;
+package com.relativity.game.handlers;
 
 import java.util.ArrayList;
 
@@ -24,13 +24,11 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.relativity.game.RelativityGame;
-import com.relativity.game.configs.entities.CollisionHandler;
-import com.relativity.game.configs.entities.HudHandler;
-import com.relativity.game.configs.entities.SpriteHandler;
-import com.relativity.game.configs.entities.types.Missile;
-import com.relativity.game.configs.entities.types.Orb;
-import com.relativity.game.configs.entities.types.Player;
-import com.relativity.game.configs.maps.HomeMenu;
+import com.relativity.game.handlers.entities.SpriteHandler;
+import com.relativity.game.handlers.entities.types.Missile;
+import com.relativity.game.handlers.entities.types.Orb;
+import com.relativity.game.handlers.entities.types.Player;
+import com.relativity.game.handlers.maps.HomeMenu;
 
 public class GameMapLoader {
 

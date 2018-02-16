@@ -1,10 +1,10 @@
-package com.relativity.game.configs.entities.types;
+package com.relativity.game.handlers.entities.types;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
-import com.relativity.game.configs.entities.SpriteHandler;
+import com.relativity.game.handlers.entities.SpriteHandler;
 
 public class Orb extends SpriteHandler {
 

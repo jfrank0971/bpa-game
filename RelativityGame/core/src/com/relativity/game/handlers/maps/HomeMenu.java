@@ -1,4 +1,4 @@
-package com.relativity.game.configs.maps;
+package com.relativity.game.handlers.maps;
 
 import java.util.HashMap;
 
@@ -70,7 +70,6 @@ public class HomeMenu implements Screen {
 
 		if (findButtonContact(pos, buttonX, startButtonY)) {
 
-			System.out.println("h");
 			drawButton("StartOn", buttonX, startButtonY, texWidth, texHeight);
 			drawButton("LevelSelectOff", buttonX, levelSelectButtonY, texWidth, texHeight);
 			drawButton("ExitOff", buttonX, exitButtonY, texWidth, texHeight);

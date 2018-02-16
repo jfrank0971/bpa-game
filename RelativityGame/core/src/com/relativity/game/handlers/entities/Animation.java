@@ -1,4 +1,4 @@
-package com.relativity.game.configs.entities;
+package com.relativity.game.handlers.entities;
 
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 

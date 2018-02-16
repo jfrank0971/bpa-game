@@ -8,8 +8,8 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.GL30;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.relativity.game.configs.entities.InputHandler;
-import com.relativity.game.configs.maps.HomeMenu;
+import com.relativity.game.handlers.InputHandler;
+import com.relativity.game.handlers.maps.HomeMenu;
 
 public class RelativityGame extends Game {
 

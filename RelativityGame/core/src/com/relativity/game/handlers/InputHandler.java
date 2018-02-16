@@ -1,4 +1,4 @@
-package com.relativity.game.configs.entities;
+package com.relativity.game.handlers;
 
 import java.util.HashMap;
 import java.util.Set;

@@ -11,11 +11,13 @@ public class DesktopLauncher {
 		
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		
-		// The main menu configuration screen, 60 FPS as a target, while it should not be rendered while in the background to save energy
 		config.width = RelativityGame.WIDTH;
 		config.height = RelativityGame.HEIGHT;
 		config.title = RelativityGame.TITLE;
+		// The main menu configuration screen, 60 FPS as a target, while it should not be rendered while in the background to save energy
 		config.backgroundFPS = -1;
+		config.foregroundFPS = 0;
+		config.allowSoftwareMode = true;
 		config.foregroundFPS = 60;
 		config.fullscreen = false;
 		config.forceExit = true;

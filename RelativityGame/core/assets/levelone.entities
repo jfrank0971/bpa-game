@@ -1,0 +1,18 @@
+[
+{type:"PLAYER", x: 1500, y: 2000, data:{}},
+{type:"PLAYER", x: 1550, y: 2000, data:{}},
+{type:"PLAYER", x: 1600, y: 2000, data:{}},
+{type:"PLAYER", x: 1650, y: 2000, data:{}},
+{type:"PLAYER", x: 1700, y: 2000, data:{}},
+{type:"PLAYER", x: 1750, y: 2000, data:{}},
+{type:"PLAYER", x: 1800, y: 2000, data:{}},
+{type:"PLAYER", x: 1500, y: 2000, data:{}},
+{type:"PLAYER", x: 1550, y: 2000, data:{}},
+{type:"PLAYER", x: 1600, y: 2000, data:{}},
+{type:"PLAYER", x: 1650, y: 2000, data:{}},
+{type:"PLAYER", x: 1700, y: 2000, data:{}},
+{type:"PLAYER", x: 1750, y: 2000, data:{}},
+{type:"PLAYER", x: 1800, y: 2000, data:{}},
+{type:"ORB", x: 1700, y: 2000, data:{}},
+{type:"ORB", x: 1400, y: 2000, data:{}},
+]

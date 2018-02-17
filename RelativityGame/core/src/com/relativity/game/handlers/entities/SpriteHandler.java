@@ -8,6 +8,16 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.relativity.game.RelativityGame;
+import com.relativity.game.handlers.entities.types.Orb;
+
+/**
+ * 	<p>
+ * 	This class mostly handles the rendering of Sprites (Orb, Player, Missile) that extend it
+ * 	</p>
+ * @version BPA SET 2018 
+ * @author Jacob Frank, Jerry Zeng, and Eddie Tang
+ */
+
 
 public class SpriteHandler {
 
@@ -15,6 +25,7 @@ public class SpriteHandler {
 	protected Animation animation;
 	protected float width;
 	protected float height;
+	protected boolean alive = true;
 
 	public SpriteHandler(Body body) {
 		this.body = body;
@@ -36,14 +47,15 @@ public class SpriteHandler {
 	}
 
 	public void render(SpriteBatch batch) {
-		//System.out.println(((body.getPosition().x * PPM) - (width / 2)) + " " + ((body.getPosition().y * PPM) - (height / 2)));
-		batch.begin();
-		batch.draw(
-				animation.getFrame(),
-				body.getPosition().x * PPM - width / 2,
-				body.getPosition().y * PPM - height / 2
-			);
-		batch.end();
+		if (alive == true) {
+			batch.begin();
+			batch.draw(
+					animation.getFrame(),
+					body.getPosition().x * PPM - width / 2,
+					body.getPosition().y * PPM - height / 2
+					);
+			batch.end();	
+		}
 	}
 
 	public Body getBody() {

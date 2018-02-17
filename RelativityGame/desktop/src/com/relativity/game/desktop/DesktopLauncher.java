@@ -5,6 +5,14 @@ import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
 import com.relativity.game.RelativityGame;
 
+/**
+ * 
+ * LibGDX's LwjglApplication Loader for a Desktop PC
+ * 
+ * @version BPA SET 2018
+ * @author Jacob Frank, Jerry Zeng, and Eddie Tang
+ */
+
 public class DesktopLauncher {
 	
 	public static void main (String[] arg) {

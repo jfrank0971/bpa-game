@@ -6,6 +6,17 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.relativity.game.handlers.entities.SpriteHandler;
 
+/**
+ * 	Created by Jacob Frank, Jerry Zeng, and Eddie Tang
+ * 
+ * 	BPA SET 2018 
+ * 
+ * 	Last Edit: 2/12/2018
+ * 
+ * 	Creates the methods necessary for the orb to interact with the world
+ * 
+ */
+
 public class Orb extends SpriteHandler {
 
 	Texture image;

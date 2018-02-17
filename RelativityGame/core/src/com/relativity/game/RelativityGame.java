@@ -10,6 +10,15 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.relativity.game.handlers.InputHandler;
 import com.relativity.game.handlers.maps.HomeMenu;
+ 	
+/**
+ * 
+ * This class controls all Screens such as the HomeMenu and LevelOne screen
+ * 
+ * @version BPA SET 2018
+ * @author Jacob Frank, Jerry Zeng, and Eddie Tang
+ */
+
 
 public class RelativityGame extends Game {
 
@@ -22,12 +31,16 @@ public class RelativityGame extends Game {
 	private SpriteBatch batch; // SPRITE BATCH should not be created more than once to improve performance
 	private OrthographicCamera txtCam;
 
+	
+	// Create the spritebatch for texture rendering, then set bounds for the main game camera
 	@Override
 	public void create() {
 		this.batch = new SpriteBatch();
 		this.txtCam = new OrthographicCamera();
 		this.txtCam.setToOrtho(false, WIDTH, HEIGHT);
 		Gdx.input.setInputProcessor(new InputHandler());
+
+		// Change screen to HomeMenu. See: HomeMenu.java
 		this.setScreen(new HomeMenu(this, txtCam));
 	}
 

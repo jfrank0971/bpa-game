@@ -4,32 +4,38 @@ import java.util.HashMap;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.relativity.game.RelativityGame;
+import com.relativity.game.handlers.InputHandler;
 
 public class HomeMenu implements Screen {
 
 	private final RelativityGame rg;
 	private OrthographicCamera txtCam;
 	private HashMap<String, Texture> txList;
-	int startButtonY, levelSelectButtonY, exitButtonY, buttonX;
+	private int startButtonY, levelSelectButtonY, exitButtonY, buttonX;
 	private final float TEXTURE_SCALE = 0.5f;
 	private int texWidth, texHeight;
+	private Music song;
+	private Sound buttonSound;
 
-	public HomeMenu(RelativityGame rg, OrthographicCamera txtCam) {
+	/**
+	 * This class manages the Main Menu, and changes the game to the LevelOne screen
+	 * if the appropriate button is pressed
+	 * 
+	 * @version BPA SET 2018
+	 * @author Jacob Frank, Jerry Zeng, and Eddie Tang
+	 */
 
-		this.txtCam = txtCam;
+	public HomeMenu(RelativityGame rg, OrthographicCamera orthoCam) {
+
+		this.txtCam = orthoCam;
 		this.rg = rg;
-		/*
-		 * [3] = Exit Off [0] = Exit On
-		 * 
-		 * [2] = Start On [5] = Start Off
-		 * 
-		 * 
-		 */
 
 		txList = new HashMap<>();
 
@@ -48,6 +54,14 @@ public class HomeMenu implements Screen {
 
 		texWidth = (int) (txList.get("StartOn").getWidth() * TEXTURE_SCALE);
 		texHeight = (int) (txList.get("StartOn").getHeight() * TEXTURE_SCALE);
+
+		song = Gdx.audio.newMusic(Gdx.files.internal("titlescreen.mp3"));
+		song.setLooping(true);
+		song.setVolume(0.5f);
+		song.play();
+
+		buttonSound = Gdx.audio.newSound(Gdx.files.internal("buttonpress.mp3"));
+
 	}
 
 	@Override
@@ -59,6 +73,8 @@ public class HomeMenu implements Screen {
 	@Override
 	public void render(float delta) {
 
+		boolean buttonHit = false;
+
 		Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 		Gdx.gl.glBlendFunc(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
 		Gdx.gl.glClearColor(1, 1, 1, 1);
@@ -68,23 +84,26 @@ public class HomeMenu implements Screen {
 		rg.getBatch().draw(txList.get("Background"), 0, 0, RelativityGame.WIDTH, RelativityGame.HEIGHT);
 		rg.getBatch().end();
 
-		if (findButtonContact(pos, buttonX, startButtonY)) {
+		if (InputHandler.findButtonContact(pos, buttonX, startButtonY, texWidth, texHeight)) {
 
 			drawButton("StartOn", buttonX, startButtonY, texWidth, texHeight);
 			drawButton("LevelSelectOff", buttonX, levelSelectButtonY, texWidth, texHeight);
 			drawButton("ExitOff", buttonX, exitButtonY, texWidth, texHeight);
+			buttonHit = true;
 
-		} else if (findButtonContact(pos, buttonX, levelSelectButtonY)) {
+		} else if (InputHandler.findButtonContact(pos, buttonX, levelSelectButtonY, texWidth, texHeight)) {
 
 			drawButton("StartOff", buttonX, startButtonY, texWidth, texHeight);
 			drawButton("LevelSelectOn", buttonX, levelSelectButtonY, texWidth, texHeight);
 			drawButton("ExitOff", buttonX, exitButtonY, texWidth, texHeight);
+			buttonHit = true;
 
-		} else if (findButtonContact(pos, buttonX, exitButtonY)) {
+		} else if (InputHandler.findButtonContact(pos, buttonX, exitButtonY, texWidth, texHeight)) {
 
 			drawButton("StartOff", buttonX, startButtonY, texWidth, texHeight);
 			drawButton("LevelSelectOff", buttonX, levelSelectButtonY, texWidth, texHeight);
 			drawButton("ExitOn", buttonX, exitButtonY, texWidth, texHeight);
+			buttonHit = true;
 
 		} else {
 
@@ -94,14 +113,22 @@ public class HomeMenu implements Screen {
 		}
 
 		if (Gdx.input.isTouched()) {
-			if (findButtonContact(pos, buttonX, startButtonY)) {
+			if (InputHandler.findButtonContact(pos, buttonX, startButtonY, texWidth, texHeight)) {
+				song.stop();
+				song.dispose();
 				rg.setScreen(new LevelOne(rg, txtCam));
-			} else if (findButtonContact(pos, buttonX, levelSelectButtonY)) {
+			} else if (InputHandler.findButtonContact(pos, buttonX, levelSelectButtonY, texWidth, texHeight)) {
 
-			} else if (findButtonContact(pos, buttonX, exitButtonY)) {
+			} else if (InputHandler.findButtonContact(pos, buttonX, exitButtonY, texWidth, texHeight)) {
+				song.stop();
+				song.dispose();
 				Gdx.app.exit();
 			}
 		}
+		if (buttonHit == true) {
+			buttonSound.play(0.3f);
+		}
+
 		txtCam.update();
 
 	}
@@ -116,15 +143,6 @@ public class HomeMenu implements Screen {
 		rg.getBatch().begin();
 		rg.getBatch().draw(txList.get(texName), buttonX, buttonY, texWidth, texHeight);
 		rg.getBatch().end();
-	}
-
-	private boolean findButtonContact(Vector3 pos, int buttonX, int buttonY) {
-
-		if (pos.x < (buttonX + texWidth) && pos.x > buttonX && pos.y < (texHeight + buttonY) && pos.y > (buttonY)) {
-			return true;
-		} else {
-			return false;
-		}
 	}
 
 	@Override

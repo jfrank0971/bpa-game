@@ -3,8 +3,13 @@ package com.relativity.game.handlers.entities;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
- * Handles animated sprites using an array of TextureRegions.
+ * 	Manages the animation. Needs a TextureRegion[] to function, and will play through a texture at a default rate of 1/64f (slower if the game lags behind)
+ * 
+ * @version BPA SET 2018
+ * @author Jacob Frank, Jerry Zeng, and Eddie Tang
+ * 
  */
+
 public class Animation {
 
 	private TextureRegion[] allFrames;

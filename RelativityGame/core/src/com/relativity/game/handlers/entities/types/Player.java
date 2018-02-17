@@ -5,10 +5,18 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.relativity.game.handlers.entities.SpriteHandler;
+import com.relativity.game.handlers.maps.LevelOne;
+
+/**
+ * Creates the methods necessary for the player to interact with the world
+ * 
+ * @version BPA SET 2018
+ * @author Jacob Frank, Jerry Zeng, and Eddie Tang
+ */
 
 public class Player extends SpriteHandler {
 
-	private static final float SPEED = 200f;
+	private static final float SPEED = 150f;
 	private static final float SPEED_BONUS = 50f;
 	private static final int JUMP_VELOCITY = 250;
 	private static int footContact = 0;
@@ -17,24 +25,21 @@ public class Player extends SpriteHandler {
 	private static Texture image;
 	private static TextureRegion[] states;
 	private static boolean onGround;
-	private static int jumps;
+	private static int jumps, health;
 	private static Body body;
 
 	public Player(Body body) {
 		super(body);
 		this.body = body;
 		image = new Texture(Gdx.files.internal("playerAnimation.png"));
+		health = 3;
 
 		TextureRegion[] playerTexture = TextureRegion.split(image, 100, 100)[0];
 		setAnimation(playerTexture, 1 / 64f);
 	}
 
-	public static void jump(boolean forceJump) {
-
-		if (forceJump) {
-			body.setLinearVelocity(body.getLinearVelocity().x, 0);
-			body.applyForceToCenter(0, JUMP_VELOCITY, true);
-		} else if (footContact > 1) {
+	public static void jump() {
+		if (footContact > 0) {
 			body.setLinearVelocity(body.getLinearVelocity().x, 0);
 			body.applyForceToCenter(0, JUMP_VELOCITY, true);
 		}
@@ -66,18 +71,27 @@ public class Player extends SpriteHandler {
 	}
 
 	public static void incrementFootContact(int i) {
+
 		if (i > 0) {
 			footContact++;
 		} else {
 			footContact--;
 		}
 
-		if (footContact > 0) {
-			onGround = true;
-		} else {
-			onGround = false;
-		}
+	}
 
+	public static int getHealth() {
+		return health;
+	}
+
+	public static void incrementHealth(boolean subtract) {
+		if (subtract == true) {
+			LevelOne.hit();
+			Player.health -= 1;
+		} else {
+			Player.health += 1;
+
+		}
 	}
 
 	public static void setFacingRight(boolean fr) {

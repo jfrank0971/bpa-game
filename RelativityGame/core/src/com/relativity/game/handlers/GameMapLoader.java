@@ -23,12 +23,21 @@ import com.badlogic.gdx.physics.box2d.Filter;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
+import com.badlogic.gdx.utils.Array;
 import com.relativity.game.RelativityGame;
 import com.relativity.game.handlers.entities.SpriteHandler;
 import com.relativity.game.handlers.entities.types.Missile;
 import com.relativity.game.handlers.entities.types.Orb;
 import com.relativity.game.handlers.entities.types.Player;
 import com.relativity.game.handlers.maps.HomeMenu;
+
+/**
+ * 
+ * This class loads all essential assets needed to create a level
+ * 
+ * @version BPA SET 2018
+ * @author Jacob Frank, Jerry Zheng, and Eddie Tang
+ */
 
 public class GameMapLoader {
 
@@ -38,16 +47,16 @@ public class GameMapLoader {
 	private TiledMap tiledMap;
 	private OrthogonalTiledMapRenderer tiledMapRenderer;
 
-	private RelativityGame rg;
-	private CollisionHandler ch;
-
 	private BodyDef bDef;
 	private PolygonShape polyShape;
 	private FixtureDef fDef;
 	private Body body;
 	private World world;
+
+	private RelativityGame rg;
 	private Box2DDebugRenderer box2dDebugRenderer;
 	private BackgroundHandler backgroundHandler;
+	private CollisionHandler collisionHandler;
 
 	private OrthographicCamera orthoCam, hudCam, box2dCam;
 	private HudHandler hudStuff;
@@ -62,8 +71,9 @@ public class GameMapLoader {
 
 		this.orthoCam = orthoCam;
 		this.rg = rg;
+		collisionHandler = new CollisionHandler();
 		world = new World(new Vector2(0, GRAVITY), true);
-		world.setContactListener(ch = new CollisionHandler());
+		world.setContactListener(collisionHandler);
 		bDef = new BodyDef();
 		fDef = new FixtureDef();
 		polyShape = new PolygonShape();
@@ -83,31 +93,27 @@ public class GameMapLoader {
 
 		loadMapTiles(mapTileLayers);
 
-		
 		orthoCam.setToOrtho(false, RelativityGame.WIDTH, RelativityGame.HEIGHT);
-
-		/*
-		 * bCam = new BoundedCamera(); bCam.setToOrtho(false, RelativityGame.WIDTH,
-		 * RelativityGame.HEIGHT);
-		 */
 
 		box2dCam = new OrthographicCamera();
 		box2dCam.setToOrtho(false, RelativityGame.WIDTH / PPM, RelativityGame.HEIGHT / PPM);
 
-		
 		hudStuff = new HudHandler(player);
-		
+
 		hudCam = new OrthographicCamera();
 		hudCam.setToOrtho(false, RelativityGame.WIDTH, RelativityGame.HEIGHT);
-		
+
 		backgroundHandler = new BackgroundHandler(hudCam);
+
+		// LOOOOOOOOP THIS
+		makePlayer(300 / PPM, 750 / PPM);
+
+		makeOrb(2500 / PPM, 850 / PPM);
+		makeOrb(2000 / PPM, 750 / PPM);
+		makeOrb(1500 / PPM, 750 / PPM);
+		makeOrb(1100 / PPM, 750 / PPM);
 		
 		
-		//LOOOOOOOOP THIS
-		makePlayer(150 /PPM, 600/PPM);
-		
-		makeOrb(200 / PPM, 250 / PPM);
-		makeOrb(600 / PPM, 250 / PPM);
 
 	}
 
@@ -120,10 +126,9 @@ public class GameMapLoader {
 			orthoCam.update();
 			box2dCam.update();
 
-			
 			batch.setProjectionMatrix(hudCam.combined);
 			backgroundHandler.render(batch);
-			
+
 			tiledMapRenderer.setView(orthoCam);
 			tiledMapRenderer.render();
 
@@ -132,13 +137,12 @@ public class GameMapLoader {
 			for (SpriteHandler sprite : spriteRenderList) {
 				sprite.render(batch);
 			}
-			
 
 			box2dDebugRenderer.render(world, box2dCam.combined);
-			
+
 			batch.setProjectionMatrix(hudCam.combined);
 			hudStuff.render(batch);
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 			rg.setScreen(new HomeMenu(rg, orthoCam));
@@ -148,27 +152,28 @@ public class GameMapLoader {
 
 	public void update(float delta) {
 		world.step(delta, 8, 2);
+
+		Array<Body> bodies = collisionHandler.getBodies();
+
+		for (int i = 0; i < bodies.size; i++) {
+			Body tempBody = bodies.get(i);
+			if (bodies.get(i).getUserData() != null && bodies.get(i).getUserData().toString().contains("Missile")) {
+				Player.incrementHealth(true);
+			}
+
+			world.destroyBody(bodies.get(i));
+		}
+		bodies.clear();
+
 		player.update(delta);
 		for (SpriteHandler sprite : spriteRenderList) {
 			sprite.update(delta);
 		}
-		
+
 	}
 
 	public void dispose() {
 		rg.dispose();
-	}
-
-	public int getWidth() {
-		return mapWidth;
-	}
-
-	public int getHeight() {
-		return mapHeight;
-	}
-
-	public int getLayers() {
-		return tiledMap.getLayers().getCount();
 	}
 
 	private void makePlayer(float x, float y) {
@@ -208,16 +213,16 @@ public class GameMapLoader {
 		fDef.isSensor = true;
 		fDef.filter.categoryBits = CollisionHandler.PLAYER;
 		fDef.filter.maskBits = CollisionHandler.GROUND | CollisionHandler.ORB;
-		
+
 		// create player foot fixture
-		body.createFixture(fDef).setUserData("foot");
+		body.createFixture(fDef).setUserData("Foot");
 		// create new player
 		player = new Player(body);
 		body.setUserData(player);
 	}
 
 	private void makeOrb(float x, float y) {
-
+		resetBox2dCreators();
 		bDef.type = BodyType.KinematicBody;
 		bDef.position.set(x, y);
 		bDef.fixedRotation = true;
@@ -231,40 +236,46 @@ public class GameMapLoader {
 		fDef.filter.categoryBits = CollisionHandler.ORB;
 		fDef.filter.maskBits = CollisionHandler.PLAYER;
 
-		body.createFixture(fDef).setUserData("orb");
+		body.createFixture(fDef).setUserData("Orb");
 		Orb orb = new Orb(body);
 		body.setUserData(orb);
-		
+
 		spriteRenderList.add(orb);
-		
-		makeMissile(orb, x - 50/PPM, y);
+
+		makeMissile(x - 50 / PPM, y);
 	}
-	
-	private void makeMissile(SpriteHandler sprite, float x, float y) {
-		
+
+	private void makeMissile(float x, float y) {
+		resetBox2dCreators();
 		bDef.type = BodyType.KinematicBody;
 		bDef.position.set(x, y);
 		bDef.fixedRotation = false;
 		bDef.linearVelocity.set(-1f, 0f);
-		
+
 		body = world.createBody(bDef);
-		
-		polyShape.setAsBox(50 / PPM, 50/PPM);
+		polyShape.setAsBox(50 / PPM, 50 / PPM);
+
 		fDef.shape = polyShape;
 		fDef.friction = 0;
 		fDef.filter.categoryBits = CollisionHandler.ORB;
 		fDef.filter.maskBits = CollisionHandler.PLAYER;
-		
-		body.createFixture(fDef).setUserData("missile");
+
+		body.createFixture(fDef).setUserData("Missile");
+		body.setBullet(true);
+
 		Missile missile = new Missile(body);
 		body.setUserData(missile);
-
 		spriteRenderList.add(missile);
 	}
-	
-	
+
+	private void resetBox2dCreators() {
+		bDef = new BodyDef();
+		polyShape = new PolygonShape();
+		fDef = new FixtureDef();
+	}
 
 	private void loadMapTiles(int[] tileLayers) {
+		resetBox2dCreators();
 		layerBuild.clear();
 
 		// PLEASE ADD IN A METHOD TO GET MULTIPLE TILEDMAPLAYERS
@@ -299,7 +310,7 @@ public class GameMapLoader {
 						fDef.filter.maskBits = CollisionHandler.PLAYER;
 						fDef.filter.categoryBits = CollisionHandler.GROUND;
 						fDef.isSensor = false;
-						world.createBody(bDef).createFixture(fDef).setUserData("tile");
+						world.createBody(bDef).createFixture(fDef).setUserData("Tile");
 
 					}
 				}

@@ -1,0 +1,20 @@
+[
+{
+	class: com.relativity.game.Score
+	name: Me
+	highScore: 55
+	lowScore: 32
+}
+{
+	class: com.relativity.game.Score
+	name: Me
+	highScore: 55
+	lowScore: 32
+}
+{
+	class: com.relativity.game.Score
+	name: Me
+	highScore: 55
+	lowScore: 32
+}
+]
